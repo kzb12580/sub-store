@@ -21,7 +21,13 @@ curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh | 
 
 ## 管理
 
-安装后随时运行管理脚本：
+安装后终端输入 `k` 打开管理菜单：
+
+```bash
+k
+```
+
+或手动运行：
 
 ```bash
 bash /opt/doh-server/manage.sh
