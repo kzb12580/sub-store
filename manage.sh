@@ -424,18 +424,21 @@ setup_firewall() {
       ufw status | grep -q "$port/tcp" || ufw allow "$port/tcp" comment "Service" </dev/null 2>/dev/null
     done
     if ! ufw status | grep -q "Status: active"; then
-      echo "y" | ufw enable </dev/null 2>/dev/null || true
+      echo "y" | ufw --force enable </dev/null 2>/dev/null || true
     fi
     ufw reload 2>/dev/null || true
     ok "防火墙就绪（SSH:$ssh_port 端口:$(echo "$@" | tr ' ' ',')）"
   fi
 
   # 快捷命令
+  mkdir -p /opt/doh-server
+  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
+    -o /opt/doh-server/manage.sh 2>/dev/null || true
+  chmod +x /opt/doh-server/manage.sh 2>/dev/null
   if ! grep -q 'alias k=' /root/.bashrc 2>/dev/null; then
     echo 'alias k="bash /opt/doh-server/manage.sh"' >> /root/.bashrc
   fi
   ln -sf /opt/doh-server/manage.sh /usr/local/bin/k
-  chmod +x /opt/doh-server/manage.sh
 }
 
 # ─── 菜单 ────────────────────────────────────────────────────────
