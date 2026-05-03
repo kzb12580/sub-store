@@ -60,6 +60,11 @@ SSH_PORT=$SSH_IN
 DOMAIN=
 EOF
 
+  # 保存 manage.sh 到目标目录
+  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
+    -o "$DIR/manage.sh" 2>/dev/null || cp "$(readlink -f "$0" 2>/dev/null || echo "$0")" "$DIR/manage.sh" 2>/dev/null || true
+  chmod +x "$DIR/manage.sh" 2>/dev/null
+
   echo ""
   echo -e "${G}╔══════════════════════════════════════════════════════╗${N}"
   echo -e "${G}║                  ✅ 安装完成！                        ║${N}"
@@ -106,6 +111,11 @@ DOH_PATH=$DOH_PATH_IN
 SSH_PORT=$SSH_IN
 DOMAIN=$DOMAIN_IN
 EOF
+
+  # 保存 manage.sh 到目标目录
+  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
+    -o "$DIR/manage.sh" 2>/dev/null || true
+  chmod +x "$DIR/manage.sh" 2>/dev/null
 
   echo ""
   echo -e "${G}╔══════════════════════════════════════════════════════╗${N}"
