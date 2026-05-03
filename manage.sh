@@ -61,7 +61,7 @@ DOMAIN=
 EOF
 
   # 保存 manage.sh 到目标目录
-  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
+  curl -sSL "https://raw.githubusercontent.com/kzb12580/doh-server/main/manage.sh" \
     -o "$DIR/manage.sh" 2>/dev/null || cp "$(readlink -f "$0" 2>/dev/null || echo "$0")" "$DIR/manage.sh" 2>/dev/null || true
   chmod +x "$DIR/manage.sh" 2>/dev/null
 
@@ -113,7 +113,7 @@ DOMAIN=$DOMAIN_IN
 EOF
 
   # 保存 manage.sh 到目标目录
-  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
+  curl -sSL "https://raw.githubusercontent.com/kzb12580/doh-server/main/manage.sh" \
     -o "$DIR/manage.sh" 2>/dev/null || true
   chmod +x "$DIR/manage.sh" 2>/dev/null
 
@@ -414,7 +414,7 @@ setup_decoy() {
   if [ -f "$DIR/decoy/index.html" ]; then
     cp "$DIR/decoy/index.html" "${WEB_DIR}/${domain}/index.html"
   else
-    curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/decoy/index.html" \
+    curl -sSL "https://raw.githubusercontent.com/kzb12580/doh-server/main/decoy/index.html" \
       -o "${WEB_DIR}/${domain}/index.html" 2>/dev/null || true
   fi
   ok "伪装网站"
