@@ -430,16 +430,6 @@ setup_firewall() {
     ok "防火墙就绪（SSH:$ssh_port 端口:$(echo "$@" | tr ' ' ',')）"
   fi
 
-  # 快捷命令
-  mkdir -p /opt/doh-server
-  curl -sSL "https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh" \
-    -o /opt/doh-server/manage.sh 2>/dev/null || true
-  chmod +x /opt/doh-server/manage.sh 2>/dev/null
-  cat > /usr/local/bin/k << 'KEOF'
-#!/bin/bash
-exec bash /opt/doh-server/manage.sh "$@"
-KEOF
-  chmod +x /usr/local/bin/k
 }
 
 # ─── 菜单 ────────────────────────────────────────────────────────
