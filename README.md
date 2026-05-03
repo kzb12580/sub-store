@@ -1,62 +1,68 @@
-# Sub-Store
+# DOH Server
 
-DOH + 订阅转换 + 伪装网站，一键部署。
+一键部署 DNS-over-HTTPS + 服务器安全加固 + 伪装网站。
 
 ## 安装
 
+**交互式（推荐）：**
 ```bash
-curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh | bash
 ```
 
-默认端口 80，IP 直接访问。指定端口：
-
+**IP 直连模式：**
 ```bash
-curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/install.sh | bash -s -- --port 8080
+curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh | bash -s -- --ip
 ```
 
-## 安装后
-
-直接用 IP 访问：
-
-- `http://你的IP` — Sub-Store Web 面板
-- `http://你的IP/dns-query?name=google.com` — DOH
-- `http://你的IP/api/sub/all/clash` — 订阅链接
-
-## 绑定域名（可选）
-
+**域名模式：**
 ```bash
-bash /opt/sub-store/scripts/setup-domain.sh your-domain.com
+curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/manage.sh | bash -s -- --domain sub.example.com
 ```
-
-自动完成：安装 Caddy → 申请 SSL → 配置反向代理 → 伪装网站
-
-绑定后：
-
-- `https://your-domain` — 伪装网站
-- `https://your-domain/dns-query?name=google.com` — DOH (HTTPS)
-- `https://your-domain/api/sub/all/clash` — 订阅链接
 
 ## 管理
 
-```bash
-systemctl restart sub-store      # 重启
-journalctl -u sub-store -f       # 日志
-cd /opt/sub-store/doh && docker compose restart  # DOH
-```
-
-## 卸载
+安装后随时运行管理脚本：
 
 ```bash
-bash <(curl -sSL https://raw.githubusercontent.com/kzb12580/sub-store/main/uninstall.sh)
+bash /opt/doh-server/manage.sh
 ```
 
-## 参数
+```
+╔══════════════════════════════════════════════════════╗
+║           DOH + 安全加固 管理脚本                     ║
+╚══════════════════════════════════════════════════════╝
+
+  1. 安装（IP 直连，无需域名）
+  2. 安装（域名 + HTTPS）
+  3. 查看状态
+  4. 添加/更换域名
+  5. 删除域名（回退到 IP 模式）
+  6. 重启 DOH
+  7. 查看防火墙
+  8. 卸载
+  0. 退出
+```
+
+## 组件
+
+| 组件 | 说明 |
+|------|------|
+| **CoreDNS** | 上游 DNS 解析（Docker） |
+| **DOH Server** | DNS-over-HTTPS 端点（Docker） |
+| **Caddy** | 反向代理 + 自动 HTTPS（域名模式） |
+| **UFW** | 防火墙，仅开放必要端口 |
+| **伪装网站** | 环保公益页面（域名模式） |
+
+## DOH 使用
+
+安装后在客户端配置 DOH 地址：
 
 ```
---port PORT        服务端口（默认 80）
---doh-path PATH    DOH 路径（默认 /dns-query）
---ssh-port PORT    SSH 端口（默认 307）
---dir DIR          安装目录（默认 /opt/sub-store）
+# IP 模式
+http://你的IP:端口/dns-query
+
+# 域名模式
+https://你的域名/dns-query
 ```
 
 ## License
